@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/dogsListFragment"
+        android:name="com.example.tindog.DogsListFragment"
+        android:label="fragment_dogs_list"
+        tools:layout="@layout/fragment_dogs_list" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.tindog.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_createProfile"
+            app:destination="@id/createProfileFragment" />
+        <action
+            android:id="@+id/action_login_to_dogsList"
+            app:destination="@id/dogsListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createProfileFragment"
+        android:name="com.example.tindog.CreateProfileFragment"
+        android:label="fragment_create_profile"
+        tools:layout="@layout/fragment_create_profile" />
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.tindog.MyProfileFragment"
+        android:label="fragment_my_profile"
+        tools:layout="@layout/fragment_my_profile" />
+    <fragment
+        android:id="@+id/myChatsFragment"
+        android:name="com.example.tindog.MyChatsFragment"
+        android:label="fragment_my_chats"
+        tools:layout="@layout/fragment_my_chats" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.tindog.ChatFragment"
+        android:label="fragment_chat"
+        tools:layout="@layout/fragment_chat" />
+</navigation>
