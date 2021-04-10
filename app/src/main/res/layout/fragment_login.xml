@@ -88,7 +88,7 @@
         android:layout_marginStart="120dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="40dp"
-        android:hint="insert password"
+        android:hint="insert email"
         android:inputType="textPassword|textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/password_input_login3"
         app:layout_constraintEnd_toEndOf="parent"

@@ -10,9 +10,11 @@ import com.example.tindog.MyApplication;
 @Database(entities = {Dog.class}, version = 1)
 abstract class AppLocalDbRepository extends RoomDatabase {
     public abstract DogDao dogDao();
+
 }
-public class
-AppLocalDb{
+
+public class AppLocalDb{
+
     static public AppLocalDbRepository db =
             Room.databaseBuilder(MyApplication.context,
                     AppLocalDbRepository.class,

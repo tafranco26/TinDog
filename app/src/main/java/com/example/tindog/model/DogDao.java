@@ -12,9 +12,12 @@ public interface DogDao {
     @Query("select * from Dog")
     List<Dog> getAllDogs();
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAllDogs(Dog... dogs);
 
     @Delete
     void deleteDog(Dog dog);
+
+
 }

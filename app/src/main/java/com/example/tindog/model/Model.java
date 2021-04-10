@@ -7,50 +7,24 @@ import java.util.List;
 
 public class Model {
     public final static Model instance = new Model();
+    ModelFirebase modelFirebase = new ModelFirebase();
+    ModelSql modelSql = new ModelSql();
+
     private Model(){
 
     }
     public interface GetAllDogsListener{
         void onComplete(List<Dog> data);
     }
-   public void getAllDogs(final GetAllDogsListener listener){
-        class MyAsyncTask extends AsyncTask{
-            List<Dog> data;
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                data = AppLocalDb.db.dogDao().getAllDogs();
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                listener.onComplete(data);
-            }
-        }
-       MyAsyncTask task = new MyAsyncTask();
-        task.execute();
+    public void getAllDogs(final GetAllDogsListener listener){
+        modelFirebase.getAllDogs(listener);
     }
 
     public interface AddAllDogsListener{
         void onComplete();
     }
-        public void adddDog(final Dog dog, AddAllDogsListener listener){
-        class MyAsyncTask extends AsyncTask {
-            @Override
-            protected Object doInBackground(Object[] objects) {
-                AppLocalDb.db.dogDao().insertAllDogs(dog);
-                return null;
-            }
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                if(listener!= null){
-                    listener.onComplete();
-                }
-            }
-        };
-            MyAsyncTask task = new MyAsyncTask();
-            task.execute();
-    }
-   }
+    public void addDog(final Dog dog, AddAllDogsListener listener){
+        modelFirebase.addDog(dog,listener );
 
+    }
+}
