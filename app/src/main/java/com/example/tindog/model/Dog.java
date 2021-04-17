@@ -8,52 +8,60 @@ import androidx.room.PrimaryKey;
 public class Dog {
     @PrimaryKey
     @NonNull
-    public String id;
-    public String dogName;
-    public String race;
-    public int dogAge;
-    public String dogImgUrl;
-    public String ownerName;
-    public String ownersPhone;
+    private String id;
+    private String name;
+    private String ownerName;
+    private String ownersPhone;
+    private String location;
+    private String breed;
+    private int age;
+    private int weight;
+    private String dogImgUrl;
+    private String description;
 
-    public Dog(){
+    public Dog() {
         this.id = "";
-        this.dogName = "";
-        this.race = "";
-        this.dogImgUrl = "";
+        this.name = "";
         this.ownerName = "";
         this.ownersPhone = "";
+        this.location = "";
+        this.breed = "";
+        this.age = 1;
+        this.weight = 1;
+        this.dogImgUrl = "";
+        this.description = "";
     }
 
-    public Dog( @NonNull String id, String dogName, String race, int dogAge, String dogImgUrl, String ownerName, String ownersPhone){
+    public Dog(@NonNull String id, String name, String ownerName, String ownersPhone, String location, String breed, int age, int weight, String dogImgUrl, String description) {
         this.id = id;
-        this.dogName = dogName;
-        this.race = race;
-        this.dogAge = dogAge;
-        this.dogImgUrl = dogImgUrl;
+        this.name = name;
         this.ownerName = ownerName;
         this.ownersPhone = ownersPhone;
-
+        this.location = location;
+        this.breed = breed;
+        this.age = age;
+        this.weight = weight;
+        this.dogImgUrl = dogImgUrl;
+        this.description = description;
     }
 
 
-
-//******geters*****//
+    //******geters*****//
     public String getId() {
         return id;
     }
 
-    public String getDogName() { return dogName; }
-
-    public String getRace() {
-        return race;
+    public String getName() {
+        return name;
     }
 
-    public int getdogAge() {
-        return dogAge;
+    public String getBreed() {
+        return breed;
     }
 
-    public String getdogImgUrl() { return dogImgUrl; }
+    public int getAge() {
+        return age;
+    }
 
     public String getOwnerName() {
         return ownerName;
@@ -63,30 +71,65 @@ public class Dog {
         return ownersPhone;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public String getDogImgUrl() {
+        return dogImgUrl;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+
     //******seters*****//
-
-
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 
     public void setName(String name) {
-        this.dogName = name;
+        this.name = name;
     }
 
-    public void setRace(String race) { this.race = race; }
-
-    public void setdogAge(int dogAge) {this.dogAge= dogAge;}
-
-    public void setdogImgUrl(String recipeImgUrl) { this.dogImgUrl = recipeImgUrl; }
-
-
-    public void setownerName(String ownerName) {this.ownerName= ownerName;}
-
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
 
     public void setOwnersPhone(String ownersPhone) {
         this.ownersPhone = ownersPhone;
     }
 
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setBreed(String breed) {
+        this.breed = breed;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+
+    public void setDogImgUrl(String dogImgUrl) {
+        this.dogImgUrl = dogImgUrl;
+    }
+
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

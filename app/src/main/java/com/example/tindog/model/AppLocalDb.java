@@ -4,8 +4,7 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.tindog.MainActivity;
-import com.example.tindog.MyApplication;
+import com.example.tindog.utils.App;
 
 @Database(entities = {Dog.class}, version = 1)
 abstract class AppLocalDbRepository extends RoomDatabase {
@@ -13,10 +12,10 @@ abstract class AppLocalDbRepository extends RoomDatabase {
 
 }
 
-public class AppLocalDb{
+public class AppLocalDb {
 
     static public AppLocalDbRepository db =
-            Room.databaseBuilder(MyApplication.context,
+            Room.databaseBuilder(App.getContext(),
                     AppLocalDbRepository.class,
                     "dbFileName.db")
                     .fallbackToDestructiveMigration()
