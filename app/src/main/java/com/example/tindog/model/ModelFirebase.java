@@ -1,52 +1,71 @@
 package com.example.tindog.model;
 
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentReference;
+import com.example.tindog.utils.App;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.util.Date;
 
 public class ModelFirebase {
 
+    private static FirebaseAuth auth = FirebaseAuth.getInstance();
+    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private static StorageReference storage = FirebaseStorage.getInstance().getReference();
 
-    public void getAllDogs(Model.GetAllDogsListener listener) {
-        List<Dog> data = new LinkedList<Dog>();
-
-        listener.onComplete(data);
+    public static void createDogProfile(EditText emailInput, EditText passwordInput, Dog dog, Model.Listener<Dog> listener) {
+        auth.createUserWithEmailAndPassword(emailInput.getText().toString(), passwordInput.getText().toString()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(App.getContext(), "User Registered...", Toast.LENGTH_SHORT).show();
+                dog.setId(auth.getCurrentUser().getUid());
+                listener.onComplete(dog);
+            } else {
+                Toast.makeText(App.getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                listener.onComplete(null);
+            }
+        });
     }
 
-    public void addDog(Dog dog, Model.AddAllDogsListener listener) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        // Create a new user with a first and last name
-        Map<String, Object> data = new HashMap<>();
-        data.put("first", "Ada");
-        data.put("last", "Lovelace");
-        data.put("born", 1815);
-
-// Add a new document with a generated ID
-        db.collection("users")
-                .add(data)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d("TAG", "DocumentSnapshot added with ID: " + documentReference.getId());
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error adding document", e);
+    public static void uploadImage(Dog dog, Bitmap dogImageBitmap, Model.Listener<Dog> listener) {
+        Date date = new Date();
+        String imageName = dog.getId() + date.getTime();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        dogImageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        StorageReference imageRef = storage.child("images").child(imageName);
+        imageRef.putBytes(baos.toByteArray()).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(App.getContext(), "Image uploaded...", Toast.LENGTH_SHORT).show();
+                imageRef.getDownloadUrl().addOnCompleteListener(uri -> {
+                    if (uri.isSuccessful()) {
+                        dog.setDogImgUrl(uri.getResult().toString());
+                        listener.onComplete(dog);
+                    } else {
+                        Toast.makeText(App.getContext(), uri.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        listener.onComplete(null);
                     }
                 });
+            } else {
+                Toast.makeText(App.getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                listener.onComplete(null);
+            }
+        });
+    }
 
-
+    public static void uploadDogToDB(Dog dog, Model.Listener<Boolean> listener) {
+        db.collection("users").document(dog.getId()).set(dog).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(App.getContext(), "User created successfully", Toast.LENGTH_SHORT).show();
+                listener.onComplete(true);
+            } else {
+                Toast.makeText(App.getContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                listener.onComplete(false);
+            }
+        });
     }
 }

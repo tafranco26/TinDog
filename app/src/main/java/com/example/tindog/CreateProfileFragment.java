@@ -90,18 +90,18 @@ public class CreateProfileFragment extends Fragment {
         st.setId("" + id);
         st.setName("name " + id);
         pb.setVisibility(View.VISIBLE);
-        Model.instance.addDog(st, new Model.AddAllDogsListener() {
+        /*Model.instance.addDog(st, new Model.AddAllDogsListener() {
             @Override
             public void onComplete() {
                 reloadData();
             }
-        });
+        });*/
     }
 
     void reloadData(){
         pb.setVisibility(View.VISIBLE);
         addBtn.setEnabled(false);
-        Model.instance.getAllDogs(new Model.GetAllDogsListener() {
+        /*Model.instance.getAllDogs(new Model.GetAllDogsListener() {
             @Override
             public void onComplete(List<Dog> data) {
                 dogList = data;
@@ -112,7 +112,7 @@ public class CreateProfileFragment extends Fragment {
                 addBtn.setEnabled(true);
                 adapter.notifyDataSetChanged();
             }
-        });
+        });*/
     }
 
 
